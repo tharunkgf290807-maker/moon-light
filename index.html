@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #4fc3a1;
+            --dark: #2d3e50;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 5% 5rem;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 4px;
+            background: var(--accent);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* About Section */
+        .about-content {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 2;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        .skills {
+            flex: 1;
+        }
+
+        .skill-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 4px;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .project-img {
+            height: 200px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-content h3 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .project-content p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: #e9ecef;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        /* Contact Section */
+        .contact-content {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .hero-content{
+            margin-top: 100px;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 1rem;
+        }
+
+        .contact-form {
+            flex: 1;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .modal-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+
+        .alert {
+            padding: 0.75rem 1.25rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-content {
+                margin-bottom: 3rem;
+            }
+
+            .about-content, .contact-content {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <nav>
+                <div class="logo">Port<span>folio</span></div>
+                <div class="nav-links">
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" id="loginBtn">Login</button>
+                    <button class="btn btn-primary" id="signupBtn">Sign Up</button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1>Hi, I'm <span>Tharun s</span></h1>
+                <p>A passionate Full Stack Developer with 5+ years of experience creating web applications that solve real-world problems.</p>
+            </div>
+            <div class="hero-image">
+                <img src="data:image/png;base64,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" alt="Developer">
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="section-title">
+                <h2>About Me</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Hello! I'm Alex, a full-stack developer based in San Francisco. I enjoy creating things that live on the internet, whether that be websites, applications, or anything in between.</p>
+                    <p>My journey in web development started back in 2017 when I decided to try editing custom Tumblr themes — turns out hacking together a custom reblog button taught me a lot about HTML & CSS!</p>
+                    <p>Fast-forward to today, and I've had the privilege of working at an advertising agency, a start-up, and a huge corporation. My main focus these days is building accessible, inclusive products and digital experiences at Upstatement for a variety of clients.</p>
+                </div>
+                <div class="skills">
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>JavaScript</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>React</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>Node.js</span>
+                            <span>80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>UI/UX Design</span>
+                            <span>75%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 75%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <div class="section-title">
+                <h2>My Projects</h2>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-img" style="background: #4a6fa5;">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>E-Commerce Platform</h3>
+                        <p>A full-featured e-commerce solution with product catalog, shopping cart, and payment integration.</p>
+                        <div class="project-tags">
+                            <span class="tag">React</span>
+                            <span class="tag">Node.js</span>
+                            <span class="tag">MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img" style="background: #4fc3a1;">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Task Management App</h3>
+                        <p>A collaborative task management application with real-time updates and team collaboration features.</p>
+                        <div class="project-tags">
+                            <span class="tag">Vue.js</span>
+                            <span class="tag">Firebase</span>
+                            <span class="tag">SCSS</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img" style="background: #166088;">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Analytics Dashboard</h3>
+                        <p>An interactive dashboard for data visualization with customizable charts and reporting features.</p>
+                        <div class="project-tags">
+                            <span class="tag">React</span>
+                            <span class="tag">D3.js</span>
+                            <span class="tag">Python</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="section-title">
+                <h2>Contact Me</h2>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h3>Location</h3>
+                            <p>Coimbatore, Tamil Nadu, India</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h3>Email</h3>
+                            <p>tharunkgf290807@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h3>Phone</h3>
+                            <p>9442455605</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" class="form-control" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="logo" style="color: white;">Port<span>folio</span></div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p class="copyright">&copy; 2023 Alex Johnson. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="modal-title">Login to Your Account</h2>
+            <div class="alert alert-danger" id="loginError"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" class="form-control" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" id="switchToSignup">Create Account</button>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="modal-title">Create an Account</h2>
+            <div class="alert alert-danger" id="signupError"></div>
+            <div class="alert alert-success" id="signupSuccess"></div>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" class="form-control" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" id="switchToLogin">Back to Login</button>
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // User data stored in arrays (for demonstration)
+        let users = [
+            { id: 1, name: "Alex Johnson", email: "alex@example.com", password: "password123" },
+            { id: 2, name: "Jane Smith", email: "jane@example.com", password: "hello123" }
+        ];
+
+        // DOM Elements
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        const loginModal = document.getElementById('loginModal');
+        const signupModal = document.getElementById('signupModal');
+        const closeModalButtons = document.querySelectorAll('.close-modal');
+        const switchToSignup = document.getElementById('switchToSignup');
+        const switchToLogin = document.getElementById('switchToLogin');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const loginError = document.getElementById('loginError');
+        const signupError = document.getElementById('signupError');
+        const signupSuccess = document.getElementById('signupSuccess');
+
+        // Event Listeners
+        loginBtn.addEventListener('click', () => {
+            loginModal.style.display = 'flex';
+            signupModal.style.display = 'none';
+        });
+
+        signupBtn.addEventListener('click', () => {
+            signupModal.style.display = 'flex';
+            loginModal.style.display = 'none';
+        });
+
+        closeModalButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                loginModal.style.display = 'none';
+                signupModal.style.display = 'none';
+                resetForms();
+            });
+        });
+
+        switchToSignup.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+            signupModal.style.display = 'flex';
+            resetForms();
+        });
+
+        switchToLogin.addEventListener('click', () => {
+            signupModal.style.display = 'none';
+            loginModal.style.display = 'flex';
+            resetForms();
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.style.display = 'none';
+                resetForms();
+            }
+            if (e.target === signupModal) {
+                signupModal.style.display = 'none';
+                resetForms();
+            }
+        });
+
+        // Login Form Submission
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // Find user in array
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                // Successful login
+                alert(`Welcome back, ${user.name}!`);
+                loginModal.style.display = 'none';
+                resetForms();
+                // In a real app, you would redirect or update UI
+            } else {
+                // Failed login
+                loginError.textContent = 'Invalid email or password. Please try again.';
+                loginError.style.display = 'block';
+            }
+        });
+        // Signup Form Submission
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Hide previous messages
+            signupError.style.display = 'none';
+            signupSuccess.style.display = 'none';
+            
+            // Validation
+            if (password !== confirmPassword) {
+                signupError.textContent = 'Passwords do not match.';
+                signupError.style.display = 'block';
+                return;
+            }
+            
+            // Check if user already exists
+            const existingUser = users.find(u => u.email === email);
+            if (existingUser) {
+                signupError.textContent = 'An account with this email already exists.';
+                signupError.style.display = 'block';
+                return;
+            }
+            
+            // Create new user (in a real app, this would be sent to a server)
+            const newUser = {
+                id: users.length + 1,
+                name: name,
+                email: email,
+                password: password
+            };
+            
+            users.push(newUser);
+            
+            // Show success message
+            signupSuccess.textContent = 'Account created successfully! You can now login.';
+            signupSuccess.style.display = 'block';
+            
+            // Reset form
+            signupForm.reset();
+            
+            // Switch to login after a delay
+            setTimeout(() => {
+                signupModal.style.display = 'none';
+                loginModal.style.display = 'flex';
+                resetForms();
+            }, 2000);
+        });
+
+        // Contact Form Submission
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! I will get back to you soon.');
+            document.getElementById('contactForm').reset();
+        });
+
+        // Reset forms and messages
+        function resetForms() {
+            loginForm.reset();
+            signupForm.reset();
+            loginError.style.display = 'none';
+            signupError.style.display = 'none';
+            signupSuccess.style.display = 'none';
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
